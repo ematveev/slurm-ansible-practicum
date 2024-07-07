@@ -1,0 +1,10 @@
+---
+app_work_dir: /opt/app
+secret_key_base: secretkey
+rails_env: "production"
+rails_log_to_stdout: 1
+db_host: postgres
+db_port: 5432
+db_name: db
+db_user: dbuser
+db_password: dbP@ssw0rd

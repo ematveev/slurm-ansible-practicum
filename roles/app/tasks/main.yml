@@ -1,0 +1,27 @@
+---
+
+- name: "Create a directory if it does not exist"
+  ansible.builtin.file:
+    path: "{{ app_work_dir }}"
+    state: directory
+
+- name: "Create compose file"
+  ansible.builtin.template:
+    src: docker-compose.j2
+    dest: "{{ app_work_dir }}/docker-compose.yml"
+
+- name: "Create env file"
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ app_work_dir}}/.env"
+
+- name: "Create nginx.conf"
+  ansible.builtin.template:
+    src: nginx.j2
+    dest: "{{ app_work_dir}}/nginx.conf"
+
+- name: "Copy all files and directories from the 'files' directory to the target directory"
+  ansible.builtin.copy:
+    src: "../files/"
+    dest: "{{ app_work_dir }}/"
+    remote_src: no

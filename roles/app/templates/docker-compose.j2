@@ -1,0 +1,33 @@
+services:
+  {{ db_host }}:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB={{db_name}}
+      - POSTGRES_USER={{db_user}}
+      - POSTGRES_PASSWORD={{db_password}}
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+    networks:
+      - app
+      
+  app:
+    image: .
+    env_file:
+      - .env
+    depends_on:
+      {{ db_host }}
+    networks:
+      - app
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    networks:
+      - app
+
+networks:
+   app:
+  
